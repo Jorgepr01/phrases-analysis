@@ -1,10 +1,9 @@
 import openai
-import data.talk as talk
+# import data.talk as talk
 # from openai import organization,api_key,ChatCompletion
 from abc import ABC,abstractclassmethod
 openai.organization = "org-NvTQ8Rdn0xB4HmgDCF3pfVGu"
 openai.api_key = "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"
-
 mensaje1=[{"role": "system",
         "content": """hace de cuenta que sos un analizador de sentimientos. yo te paso sentimientos y vos analizas
                    el sentimiento de los mensaje y me das una respuesta con al menos 1 caracter y un máximo de 4 caracteres
@@ -16,12 +15,13 @@ mensaje2=[{"role": "system",
                          Y RECURDAD, que al final de la frase tienes que calificar mi felicidad del 1 al 10, no me digas las escala la calificacion"""}
         ]
 
+
+
 #creando una clase abtracta
 class Analisador(ABC):
-    def __init__(self):
-        self.event=talk.events()
-        talk.talk().tablaYcursor()
-
+    # def __init__(self):
+    #     self.event=talk.events()
+    #     talk.talk().tablaYcursor()
 
     @abstractclassmethod
     def calificador(self):

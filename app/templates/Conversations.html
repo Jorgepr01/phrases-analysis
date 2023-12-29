@@ -91,33 +91,63 @@
 
 <!-- opcional -->
 <script>
+  function typeWriterEffect(text, element, callback) {
+    let i = 0;
+    const speed = 50; // velocidad en milisegundos
+
+    function typeWriter() {
+      if (i < text.length) {
+        element.innerHTML += text.charAt(i);
+        i++;
+        setTimeout(typeWriter, speed);
+      } else {
+        if (callback) callback();
+      }
+    }
+    typeWriter();
+  }
+
+  // Función para desplazarte automáticamente al final del contenedor
+  function scrollToBottom() {
+    $("#messageFormeight").scrollTop($("#messageFormeight")[0].scrollHeight);
+  }
+
   $(document).ready(function() {
     $("#messageArea").on("submit", function(event) {
       const date = new Date();
       const hour = date.getHours();
       const minute = date.getMinutes();
-      const str_time = hour+":"+minute;
+      const str_time = hour + ":" + minute;
       var rawText = $("#text").val();
 
-      var userHtml = '<div class="d-flex justify-content-end mb-4"><div class="msg_cotainer_send">' + rawText + '<span class="msg_time_send">'+ str_time + '</span></div><div class="img_cont_msg"><img src="https://i.ibb.co/d5b84Xw/Untitled-design.png" class="rounded-circle user_img_msg"></div></div>';
+      var userHtml = '<div class="d-flex justify-content-end mb-4"><div class="msg_cotainer_send">' + rawText + '<span class="msg_time_send">' + str_time + '</span></div><div class="img_cont_msg"><img src="https://i.ibb.co/d5b84Xw/Untitled-design.png" class="rounded-circle user_img_msg"></div></div>';
       
       $("#text").val("");
       $("#messageFormeight").append(userHtml);
+      scrollToBottom();  // Desplazarte al final después de añadir el mensaje del usuario
 
       $.ajax({
         data: {
-          msg: rawText,	
+          msg: rawText,    
         },
         type: "POST",
         url: "/get",
       }).done(function(data) {
-        var botHtml = '<div class="d-flex justify-content-start mb-4"><div class="img_cont_msg"><img src="https://i.ibb.co/fSNP7Rz/icons8-chatgpt-512.png" class="rounded-circle user_img_msg"></div><div class="msg_cotainer">' + data + '<span class="msg_time">' + str_time + '</span></div></div>';
-        $("#messageFormeight").append($.parseHTML(botHtml));
+        const botMessageContainer = $('<div class="d-flex justify-content-start mb-4"><div class="img_cont_msg"><img src="https://i.ibb.co/fSNP7Rz/icons8-chatgpt-512.png" class="rounded-circle user_img_msg"></div><div class="msg_cotainer"><span class="botMessage"></span><span class="msg_time">' + str_time + '</span></div></div>');
+        
+        $("#messageFormeight").append(botMessageContainer);
+        scrollToBottom();  // Desplazarte al final después de añadir el mensaje del bot
+
+        typeWriterEffect(data, botMessageContainer.find(".botMessage")[0], function() {
+          botMessageContainer.find(".botMessage").text(data);
+        });
       });
+
       event.preventDefault();
     });
   });
 </script>
+
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>
