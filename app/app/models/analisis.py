@@ -2,8 +2,10 @@ import openai
 # import data.talk as talk
 # from openai import organization,api_key,ChatCompletion
 from abc import ABC,abstractclassmethod
+
 openai.organization = "org-NvTQ8Rdn0xB4HmgDCF3pfVGu"
-openai.api_key = "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"
+# openai.api_key = "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"
+openai.api_key = "--Key API OPEN AI"
 mensaje1=[{"role": "system",
         "content": """hace de cuenta que sos un analizador de sentimientos. yo te paso sentimientos y vos analizas
                    el sentimiento de los mensaje y me das una respuesta con al menos 1 caracter y un máximo de 4 caracteres
@@ -13,6 +15,11 @@ mensaje1=[{"role": "system",
 mensaje2=[{"role": "system",
         "content": """debes ser un asistente psicologico que tienes que dar una frase motivadora dse menos de 25 palabras,
                          Y RECURDAD, que al final de la frase tienes que calificar mi felicidad del 1 al 10, no me digas las escala la calificacion"""}
+        ]
+mensaje4=[{"role": "system",
+        "content": """debes ser un asistente psicologico que tienes que dar una frase motivadora dse menos de 40 palabras,
+                         Y RECUERDA, que al final de la frase tienes que calificar mi felicidad del 1 al 10, es muy importanteque NO digas las 
+                         escala de la calificacion, Y ademas prioriza el hilo de la conversacion segun lo que te va diciendo"""}
         ]
 
 

@@ -22,7 +22,7 @@ class AnalisisFrases(Analisador):
         return [1,promt,resultado,felicidad_Cand,date_now]
         # self.event.close()
 
-    def psicologo(self,promt,calificador=5):
+    def psicologo(self,promt):
         mensaje =mensaje2
         frases = TiposAnalisis()
         # promt = input("Insert: ")

@@ -2,6 +2,7 @@ from flask import Flask,render_template, request
 from flask_mysqldb import MySQL
 import app.database.queries as queries
 import app.models.frases as frase
+import app.models.conv as conv
 app = Flask(__name__)
 
 app.config['MYSQL_HOST'] = 'localhost'
@@ -32,16 +33,25 @@ def Phrases():
 def Conversations():
     return render_template('Conversations.html')
 
-@app.route("/get", methods=["POST"])
+@app.route("/get-frase", methods=["POST"])
 def chat():
     msg = request.form["msg"]
     input = msg
     mensaje3 = frase.AnalisisFrases()
     mens=mensaje3.psicologo(msg)
     talk=queries.eventsTalk(mysql)
-    talk.insetar(1,2,28-12-2023)
+    talk.insetar(1,2,"2024-02-28")
     return mens[2]
 
+@app.route("/get-conv", methods=["POST"])
+def chat():
+    msg = request.form["msg"]
+    input = msg
+    mensaje3 = frase.AnalisisFrases()
+    mens=mensaje3.psicologo(msg)
+    talk=queries.eventsTalk(mysql)
+    talk.insetar(1,2,"2024-02-28")
+    return mens[2]
 
 if __name__ == '__main__':
     app.run(debug=True)
